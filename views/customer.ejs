@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <div class="container fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card" style="width: 1080px">
+                    <div class="card-body">
+                        <h5 class="card-title ">List</h5>
+                        <span>GET | URL: /customer | </span>
+                        <a href="/customer" class="btn btn-primary btn-block">List</a>
+                    </div>
+                </div>
+                <br>
+                <div class="card" style="width: 1080px">
+                    <div class="card-body">
+                        <h5 class="card-title ">Register</h5>
+                        <span>POST | URL: /customer/register | Param</span>
+                        <ul class="list-group">
+                            <li class="list-group-item">name: String</li>
+                            <li class="list-group-item">gender: Boolean</li>
+                            <li class="list-group-item">address: String</li>
+                            <li class="list-group-item">email: String</li>
+                            <li class="list-group-item">phone: String</li>
+                            <li class="list-group-item">card: String</li>
+                            <li class="list-group-item">username: String</li>
+                            <li class="list-group-item">password: String</li>
+                        </ul>
+                        <a href="/apiCustomer/" class="btn btn-success btn-block">Register</a>
+                    </div>
+                </div>
+                <br>
+                <div class="card" style="width: 1080px">
+                    <div class="card-body">
+                        <h5 class="card-title ">Login</h5>
+                        <span>POST | URL: /customer/login | Param</span>
+                        <ul class="list-group">
+                            <li class="list-group-item">name: String</li>
+                            <li class="list-group-item">password: String</li>
+                        </ul>
+                        <a href="/apiCustomer/" class="btn btn-success btn-block">Login</a>
+                    </div>
+                </div>
+
+</body>
+
+</html>

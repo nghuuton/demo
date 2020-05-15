@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <p>Các thành viên trong nhóm:</p>
+  <% arr.forEach(item => { %>
+  <div>
+    <span><%= item.ms %></span>
+    -
+    <span><%= item.name %></span>
+  </div>
+  <% }) %>
+  <hr>
+  <a href="/apiProduct" class="btn btn-success">API-Product</a>
+  <a href="/apiVariation" class="btn btn-success">API-Variation</a>
+  <a href="/apiCustomer" class="btn btn-success">API-Customer</a>
+  <hr>
+  <div class="container fluid">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="card" style="width: 1080px">
+          <div class="card-body">
+            <h5 class="card-title ">Category</h5>
+            <span>GET | URL: /category</span>
+            <a href="/category" class="btn btn-primary btn-block">List</a>
+          </div>
+        </div>
+        <br>
+        <div class="card" style="width: 1080px">
+          <div class="card-body">
+            <h5 class="card-title ">Category</h5>
+            <span>POST | URL: /category | Param</span>
+            <ul class="list-group">
+              <li class="list-group-item">name: String</li>
+              <li class="list-group-item">description: String</li>
+              <li class="list-group-item">Status: Boolean</li>
+              <li class="list-group-item">Slug: String</li>
+            </ul>
+            <a href="/category" class="btn btn-success btn-block">Store</a>
+          </div>
+        </div>
+
+        <br>
+        <div class="card" style="width: 1080px">
+          <div class="card-body">
+            <h5 class="card-title ">Category</h5>
+            <span>DELETE | URL: /category/id | Param</span>
+            <a href="/category" class="btn btn-danger btn-block">Destroy</a>
+          </div>
+        </div>
+        <br>
+        <div class="card" style="width: 1080px">
+          <div class="card-body">
+            <h5 class="card-title">Category</h5>
+            <span>GET | URL: /category/id </span>
+            <a href="/category" class="btn btn-info btn-block">Show</a>
+          </div>
+        </div>
+        <br>
+        <div class="card" style="width: 1080px">
+          <div class="card-body">
+            <h5 class="card-title">Category</h5>
+            <span>PATCH | URL: /category/id </span>
+            <ul class="list-group">
+              <li class="list-group-item">name: String</li>
+              <li class="list-group-item">description: String</li>
+              <li class="list-group-item">Status: Boolean</li>
+              <li class="list-group-item">Slug: String</li>
+              <li class="list-group-item">Example: [{"propName": "name", "value": "Asus ROG"}]</li>
+            </ul>
+            <a href="/category" class="btn btn-secondary btn-block">Update</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+
+</html>

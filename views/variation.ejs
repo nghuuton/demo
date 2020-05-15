@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <div class="container fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card" style="width: 1080px">
+                    <div class="card-body">
+                        <h5 class="card-title ">Variation</h5>
+                        <span>GET | URL: /variation</span>
+                        <a href="/variation" class="btn btn-primary btn-block">List</a>
+                    </div>
+                </div>
+                <br>
+                <div class="card" style="width: 1080px">
+                    <div class="card-body">
+                        <h5 class="card-title ">Variation</h5>
+                        <span>POST | URL: /variation | Param</span>
+                        <ul class="list-group">
+                            <li class="list-group-item">name: String</li>
+                            <li class="list-group-item">price: Integer</li>
+                            <li class="list-group-item">price_sale: Integer</li>
+                            <li class="list-group-item">status: Boolean</li>
+                            <li class="list-group-item">productId: Integer</li>
+                        </ul>
+                        <a href="/variation" class="btn btn-success btn-block">Store</a>
+                    </div>
+                </div>
+
+                <br>
+                <div class="card" style="width: 1080px">
+                    <div class="card-body">
+                        <h5 class="card-title ">Variation</h5>
+                        <span>DELETE | URL: /variation/id | Param</span>
+                        <a href="/variation" class="btn btn-danger btn-block">Destroy</a>
+                    </div>
+                </div>
+                <br>
+                <div class="card" style="width: 1080px">
+                    <div class="card-body">
+                        <h5 class="card-title">Variation</h5>
+                        <span>GET | URL: /variation/id </span>
+                        <a href="/variation" class="btn btn-info btn-block">Show</a>
+                    </div>
+                </div>
+                <br>
+                <div class="card" style="width: 1080px">
+                    <div class="card-body">
+                        <h5 class="card-title">Variation</h5>
+                        <span>PATCH | URL: /variation/id </span>
+                        <ul class="list-group">
+                            <li class="list-group-item">name: String</li>
+                            <li class="list-group-item">price: Integer</li>
+                            <li class="list-group-item">price_sale: Integer</li>
+                            <li class="list-group-item">status: Boolean</li>
+                            <li class="list-group-item">productId: Integer</li>
+                            <li class="list-group-item">Example: [{"propName": "name", "value": "Báo giá tháng 1"}]</li>
+                        </ul>
+                        <a href="/variation" class="btn btn-secondary btn-block">Update</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
