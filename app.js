@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
+const helmet = require('helmet');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -12,13 +13,22 @@ const productRouter = require('./routes/product');
 const variationRouter = require('./routes/variation');
 const app = express();
 
+
+
+// app.all('/*', function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type,accept,access_token,X-Requested-With');
+//   next();
+// });
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 const corsOptions = {
   exposedHeaders: 'Authorization',
 }
-
+app.use(helmet());
 app.use(cors(corsOptions));
 
 app.use(logger('dev'));
@@ -30,6 +40,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({
   extended: false
 }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -1,4 +1,3 @@
-const express = require('express');
 const db = require('../models/index');
 const Variation = db.variation;
 

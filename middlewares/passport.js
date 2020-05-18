@@ -36,7 +36,7 @@ Passport.use(new JwtStrategy({
 
 
 Passport.use(new LocalStrategy({
-	usernameField: 'username'
+	usernameField: 'username',
 }, async (username, password, done) => {
 	try {
 		const account = await Account.findOne({

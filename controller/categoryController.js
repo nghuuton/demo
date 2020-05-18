@@ -1,6 +1,5 @@
 const db = require('../models/index');
 const Category = db.category;
-const express = require('express');
 
 module.exports = {
   index: (req, res) => {

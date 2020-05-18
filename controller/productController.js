@@ -1,10 +1,17 @@
 const express = require('express');
 const db = require('../models/index');
 const Product = db.product;
+const Image = db.image;
+const fs = require('fs');
 
 module.exports = {
   index: (req, res) => {
-    Product.findAll().then(product => {
+    Product.findAll({
+      include: {
+        model: Image,
+        as: 'image'
+      }
+    }).then(product => {
       if (product.length <= 0) {
         res.status(404).json({
           "message": "No data!"
@@ -19,6 +26,9 @@ module.exports = {
               description: item.description,
               quantity: item.quantity,
               status: item.status,
+              imagePath: item.image.map(image => {
+                return image.slug
+              }),
               category: `https://congngheso1.herokuapp.com/${item.categoryId}`
             }
           })
@@ -32,7 +42,7 @@ module.exports = {
     });
   },
 
-  store: (req, res) => {
+  store: async (req, res) => {
     let productData = {
       name: req.body.name,
       description: req.body.description,
@@ -45,43 +55,62 @@ module.exports = {
         "message": "Bad Data"
       });
     } else {
-      Product.findOne({
+      const product = await Product.findOne({
         where: {
-          name: req.body.name
+          name: productData.name
         }
-      }).then(product => {
-        if (!product) {
-          Product.create(productData).then(() => {
-            res.status(200).json({
-              "message": "Create product success!"
-            });
-          }).catch(err => {
-            res.status(400).json({
-              "message": err.errors[0].message
-            });
-          });
-        } else {
-          res.status(300).json({
-            "message": "Product exist!"
-          })
-        }
-      }).catch(err => {
-        res.status(500).json({
-          "message": "Server Error"
-        });
       });
+      if (product) {
+        res.status(301).json({
+          "message": "Sản phẩm đã tồn tại"
+        })
+      } else {
+        Product.create(productData).then(product => {
+          let arrImage = req.files;
+          arrImage.forEach(image => {
+            product.createImage({
+              slug: image.path
+            })
+          })
+          res.status(200).json({
+            "message": "Create Product Success"
+          });
+        }).catch(err => {
+          res.status(500).json({
+            "Error": err
+          })
+        })
+      }
     }
   },
 
-  destroy: (req, res) => {
+  destroy: async (req, res) => {
     const id = req.params.id;
+    const pathImage = await Image.findAll({
+      attributes: ['slug'],
+      where: {
+        productId: id
+      }
+    });
+    if (pathImage) {
+      pathImage.forEach(path => {
+        fs.unlink(path.slug, err => {
+          if (err) throw err;
+        })
+      });
+      Image.destroy({
+        where: {
+          productId: id
+        }
+      })
+    }
     Product.destroy({
       where: {
         id: id
       }
     }).then(() => {
       res.status(200).json({
-        "message": "Delete Category Success!"
+        "message": "Delete Product Success!"
       });
     }).catch(err => {
       res.status(500).json({
@@ -91,11 +120,39 @@ module.exports = {
   },
 
 
-  update: (req, res) => {
+  update: async (req, res) => {
     const id = req.params.id;
-    const productData = {};
-    for (const ops of req.body) {
-      productData[ops.propName] = ops.value;
+    const productData = req.body;
+    const imageData = req.files;
+    const pathImage = await Image.findAll({
+      attributes: ['slug'],
+      where: {
+        productId: id
+      }
+    });
+    // for (const ops of req.body) {
+    //   productData[ops.propName] = ops.value;
+    // }
+    // for (const opsImg of req.files) {
+    //   opsImg[opsImg.propName] = opsImge.value
+    // }
+    if (Object.entries(imageData).length !== 0) {
+      pathImage.forEach(path => {
+        fs.unlink(path.slug, err => {
+          if (err) console.log(err);
+        });
+      });
+      Image.destroy({
+        where: {
+          productId: id
+        }
+      });
+      imageData.forEach(image => {
+        Image.create({
+          slug: image.path,
+          productId: id
+        });
+      });
     }
     Product.update(productData, {
       where: {
@@ -116,6 +173,10 @@ module.exports = {
 
   show: (req, res) => {
     Product.findOne({
+      include: {
+        model: Image,
+        as: 'image'
+      },
       where: {
         id: req.params.id
       }
@@ -125,6 +186,9 @@ module.exports = {
         name: product.name,
         description: product.description,
         status: product.status,
+        pathImage: product.image.map(path => {
+          return path.slug
+        }),
         category: `https://congngheso1.herokuapp.com/category/${product.categoryId}`
       }
       res.status(200).json(respone)
