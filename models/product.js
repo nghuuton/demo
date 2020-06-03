@@ -6,12 +6,19 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           msg: "Không được bỏ trống!"
-        }
+        },
+      },
+      unique: {
+        args: true,
+        msg: 'Product already in use!'
       }
     },
     description: DataTypes.STRING,
     quantity: DataTypes.INTEGER,
-    status: DataTypes.BOOLEAN
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {});
   product.associate = function (models) {
     // associations can be defined here

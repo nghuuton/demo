@@ -1,8 +1,8 @@
 const db = require('../models/index');
 const Variation = db.variation;
-
+const Sequelize = require('sequelize');
 module.exports = {
-  index: (req, res) => {
+  index: (req, res) => { // Hàm lấy danh sách báo giá
     Variation.findAll().then(variation => {
       if (variation.length > 0) {
         const respone = {
@@ -31,7 +31,7 @@ module.exports = {
     });
   },
 
-  show: (req, res) => {
+  show: (req, res) => { // lấy thông tin 1 thằng
     Variation.findOne({
       where: {
         id: req.params.id
@@ -61,7 +61,7 @@ module.exports = {
     });
   },
 
-  destroy: (req, res) => {
+  destroy: (req, res) => { // Xóa 1 thằng
     Variation.destroy({
       where: {
         id: req.params.id
@@ -77,7 +77,7 @@ module.exports = {
     });
   },
 
-  update: (req, res) => {
+  update: (req, res) => { // Cập nhật 1 thằng
     let dataVariation = {};
     for (const ops of req.body) {
       dataVariation[ops.propName] = ops.value
@@ -91,15 +91,15 @@ module.exports = {
         "message": "Variation Updated!",
         "url": "https://congngheso1.herokuapp.com/variation"
       });
-    }).catch(err => {
-      res.status(500).json({
-        "message": "Server error"
-      });
-    });
+    }).catch(Sequelize.ValidationError, err => {
+      res.status(201).json({
+        "errors": err.message
+      })
+    })
   },
 
-  store: (req, res) => {
-    let dataVariation = {
+  store: (req, res) => { // tạo một thằng
+    let dataVariation = { // Lấy dữ liệu từ form
       name: req.body.name,
       price: req.body.price,
       price_sale: req.body.price_sale,
@@ -111,31 +111,32 @@ module.exports = {
         "message": "Bad Data"
       })
     } else {
-      Variation.findOne({
-        where: {
-          name: req.body.name
-        }
-      }).then(variation => {
-        if (!variation) {
-          Variation.create(dataVariation).then(() => {
-            res.status(200).json({
-              message: "Variation create success!"
-            });
-          }).catch(err => {
-            res.status(500).json({
-              message: err.errors[0].message
-            })
-          })
-        } else {
-          res.status(300).json({
-            "message": "Variation exits"
-          })
-        }
-      }).catch(err => {
-        res.status(500).json({
-          message: "Server error"
+      // Variation.findOne({
+      //   where: {
+      //     name: req.body.name
+      //   }
+      // }).then(variation => {
+      //   if (!variation) {
+      Variation.create(dataVariation).then((newVariation) => {
+        res.status(200).json({
+          "variation": newVariation,
+          "message": "Variation create success!"
         });
-      });
+      }).catch(Sequelize.ValidationError, err => {
+        res.status(201).json({
+          "errors": err.message
+        })
+      })
+      //   } else {
+      //     res.status(300).json({
+      //       "message": "Variation exits"
+      //     })
+      //   }
+      // }).catch(err => {
+      //   res.status(500).json({
+      //     message: "Server error"
+      //   });
+      // });
     }
   }
 

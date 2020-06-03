@@ -11,7 +11,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     price: DataTypes.DOUBLE,
     price_sale: DataTypes.DOUBLE,
-    status: DataTypes.BOOLEAN
+    status: DataTypes.BOOLEAN,
+    productId: {
+      type: DataTypes.INTEGER,
+      unique: {
+        msg: "Product already in use !!!"
+      }
+    }
   }, {});
   variation.associate = function (models) {
     // associations can be defined here

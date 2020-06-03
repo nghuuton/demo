@@ -30,15 +30,15 @@ router.get('/', function (req, res, next) {
   }, );
 });
 
-router.get('/apiProduct', (req, res) => {
-  res.render('product');
-});
+// router.get('/apiProduct', (req, res) => {
+//   res.render('product');
+// });
 
-router.get('/apiVariation', (req, res) => {
-  res.render('variation');
-});
-router.get('/apiCustomer', (req, res) => {
-  res.render('customer')
-})
+// router.get('/apiVariation', (req, res) => {
+//   res.render('variation');
+// });
+// router.get('/apiCustomer', (req, res) => {
+//   res.render('customer')
+// })
 
 module.exports = router;

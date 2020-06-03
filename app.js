@@ -29,6 +29,8 @@ const corsOptions = {
   exposedHeaders: 'Authorization',
 }
 app.use(helmet());
+app.options('*', cors());
+app.use(cors());
 app.use(cors(corsOptions));
 
 app.use(logger('dev'));
@@ -46,10 +48,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
-app.use('/category', categoryRouter);
-app.use('/product', productRouter);
-app.use('/variation', variationRouter);
-app.use('/customer', customerRouter);
+app.use('/api/category', categoryRouter);
+app.use('/api/product', productRouter);
+app.use('/api/variation', variationRouter);
+app.use('/api/customer', customerRouter);
 
 
 // catch 404 and forward to error handler
